@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "outDir": "./dist",   // Directorio donde se generarán los archivos .js
+    "rootDir": "./src",   // Directorio donde se encuentra tu código TypeScript
+    "target": "es6",      // Versión de JavaScript a la que se compilará
+    "module": "commonjs", // Módulo que usa Node.js
+    "strict": true        // Activa comprobaciones estrictas de TypeScript
+  },
+  "include": ["src/**/*"]
+}
