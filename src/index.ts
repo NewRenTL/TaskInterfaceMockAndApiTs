@@ -1,11 +1,12 @@
 import fs from 'fs' 
 import axios from 'axios';
+import { error } from 'console';
 
 interface IGeoService {
     getCoordinates(city: string, country: string): Promise<{ lat: number, lon: number }>;
 }
 
-class CSVGeoService implements IGeoService {
+export class CSVGeoService implements IGeoService {
     private cities: Array<{ city: string, country: string, lat: number, lon: number }> = [];
 
     constructor() {
@@ -79,7 +80,7 @@ function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
 }
 
 
-class GeoServiceSwitcher {
+export class GeoServiceSwitcher {
     private service: IGeoService;
     private isMock:boolean = false;
 
@@ -95,6 +96,14 @@ class GeoServiceSwitcher {
     }
 
     async getDistance(city1: string, country1: string, city2: string, country2: string): Promise<number> {
+        if(city1 === '' || city2 === '' || country1 === '' || country2 === ''){
+            throw new Error("We need real city names")
+        }
+
+        if(city1 === city2 && country1 === country2){
+            return 0
+        }
+
         const coords1 = await this.service.getCoordinates(city1, country1);
         const coords2 = await this.service.getCoordinates(city2, country2);
 
